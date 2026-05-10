@@ -34,8 +34,9 @@ Use when the main output is a durable Obsidian note revision or creation.
 
 - Read `references/family-routing.md`, `references/style-rules.md`, `references/story-patterns.md`, `references/recipe-policy.md`, and `references/review-workflow.md`.
 - Route by governing root: note family first, then note structure.
-- For `## Story`, use the tighter pressure-driven story pattern:
+- For `## Story`, use the pressure-driven story pattern as a natural problem-solving flow, not a rigid checklist:
   concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
+- Treat that pattern as an outline to refer to. The reader should finish with a solid grasp of what the thing is, why it exists, what problem it solves, why it became the current state, and how each stage leads to the next without hidden gaps.
 - For system or design topics, use the designer-thought form of the same pattern:
   concrete pressure -> simplest workable idea -> pictured failure or unfairness -> mechanism that fixes that specific problem -> why this fix fits the hardware/workflow -> guarantee and remaining boundary -> final shape.
 - Only log new note creation when the target vault's workflow requires it. Do not log ordinary edits unless the vault rule explicitly says to.

@@ -2,6 +2,8 @@
 
 Use these patterns when a note should teach through a strong `## Story` instead of only summarizing facts.
 
+The most important rule is that the story should feel natural. It should read like a real problem-solving mind flow, not like a stiff template being filled in. The pattern below is an outline to guide the growth of understanding. It is not a rigid requirement. The point is that, by the end, the reader should have a solid grasp of what the thing is, why it exists, what problem it solves, why it became the current shape, and how each stage leads to the next without hidden jumps.
+
 ## General Durable-Note Pattern
 
 Use this as the default pattern for atomic durable notes of any kind: concepts, syntax, commands, APIs, mechanisms, or designs.
@@ -30,8 +32,22 @@ Use this as the default pattern for atomic durable notes of any kind: concepts, 
 8. Close with a compact final mental model.
    End with the short rule the reader should be able to carry forward and reuse.
 
+This should feel like a mind moving through a real question:
+- what job or pressure made this thing necessary
+- what obvious first idea a reader or designer would try
+- why that first idea was not enough
+- what repair or mechanism had to be added
+- why that fix fits this environment better than other options
+- how that chain produced the current form
+- what the result guarantees, and where its boundary still is
+
 The core chain is:
 - concrete problem frame and practical use -> simplest idea -> exact breakage -> refined rule -> why it fits here -> exact landing -> guarantee and boundary -> final mental model
+
+Another good way to hear the same pattern is:
+- why this exists -> what problem showed up -> what simple move came first -> where it broke -> what changed -> why it became today's shape -> what you can now rely on
+
+Do not force every note to use every beat with the same visible weight. Some notes need more time on the failure case. Some need more time on the implementation landing. Some can merge two adjacent beats into one paragraph. The real rule is: do not skip the bridge the reader needs in order to feel why the next stage had to happen.
 
 For design-heavy notes, this chain should read like one continuous finishing story, not like a tour of finished parts. The preferred feeling is:
 - unmet job -> naive build -> visible failure -> minimal fix -> new operating rule -> implementation landing -> final boundary
@@ -51,6 +67,8 @@ The opening background should usually answer one of these before the local reaso
 - what practical task makes the distinction in this note matter
 - what resource or latency pressure is shaping the choice
 - what kind of mistake a reader would make without this note
+
+If the reader would still have to ask "why did the story jump from here to there?", the note is still missing a bridge. Add the missing actor, failure case, tradeoff, or stage transition instead of hiding the gap behind a cleaner summary.
 
 ## Async-FIFO Pattern
 
@@ -173,9 +191,13 @@ This pattern matters because `async_fifo _next state.md` and `async_fifo_design_
 - Bring in enough background before the mechanism so the reader knows why this local story matters.
 - Say what the thing is, not only what it does.
 - For durable notes in general, tell the causal learning path, not just the finished abstraction.
+- Make the story feel like a natural reasoning flow. The reader should feel the problem, the failed shortcut, the repair, and the final shape as one continuous growth path.
+- Treat the pattern as an outline, not a rigid form. Use the beats that help the reader, merge beats when natural, and expand beats when a missing bridge would otherwise confuse the logic.
+- Make sure the reader can finish with four stable anchors: what it is, why it exists, what problem it solves, and why it ended up in the current state.
 - For design-heavy notes, tell the designer's step-by-step finishing path, not only the finished abstraction. A strong story often sounds like: "the pressure here is P, the easy version is X, that breaks in case Y, so the design adds Z, Z fits because of hardware/workflow reason H, and the result guarantees G but still does not guarantee N."
 - For concept-heavy notes, use the same root in concept form: "the first practical situation suggests X, that fails because of hidden fact Y, so the real rule is Z, which fits the true actor model because B, and its boundary is C."
 - Make each next paragraph earned by the previous one.
+- Do not skip stage transitions. If a move in the story would not feel inevitable to a careful reader, add the missing step.
 - Prefer one governing root over a list of disconnected facts.
 - Make child links carry jobs, not only titles. The sentence before the link should say what question the child note resolves.
 - Use exact RTL names only after the conceptual bridge exists; then use them as proof anchors.

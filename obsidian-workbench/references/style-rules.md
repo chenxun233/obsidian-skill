@@ -19,7 +19,8 @@ Apply these after routing chooses the note family.
 ## Story Construction
 - Start from the common root and let each later move grow from the problem created by the earlier move.
 - When the user wants a stronger story, narrative, first-principles explanation, or a more natural `## Story`, write it like progressive discovery rather than like a textbook summary.
-- For durable notes in general, use the tighter pressure-driven story pattern: concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage, ambiguity, or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
+- For durable notes in general, use the pressure-driven story pattern as a natural problem-solving flow, not a rigid checklist: concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage, ambiguity, or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
+- Treat that pattern as an outline to refer to. The goal is that the reader finishes with a solid grasp of what the thing is, why it exists, what problem it solves, why it reached the current state, and how one stage leads to the next without hidden jumps.
 - The background should arrive first and stay brief, but it should not be vague. Show the surrounding system, actor, data path, resource limit, or decision pressure that makes the local reasoning necessary before you start the derivation.
 - For design notes, use the designer's version of that same pattern: concrete pressure -> simplest workable idea -> pictured failure or unfairness -> new mechanism -> why that mechanism fits the hardware or workflow -> guarantee and remaining tradeoff/boundary -> final shape.
 - In design notes, weave the story as one continuous growth path from beginning to end. Do not present the final module split, final signal partition, or final abstraction first and then explain its parts. Let the final structure appear only after the earlier pressure and fixes make it necessary.
@@ -28,6 +29,7 @@ Apply these after routing chooses the note family.
 - Start from the obvious idea or naive mental model when that helps the reader feel the problem.
 - Make each next section earned: `pressure -> naive move -> visible breakage -> needed insight -> exact rule -> boundary`.
 - Show the internal logic in direct language. The reader should feel why the next paragraph has to exist.
+- If the reader would feel a jump between two stages, add the missing bridge instead of compressing it away.
 - Put concrete examples before the abstract rule when possible, especially for the breakage step.
 - After introducing the fix, say why this fix is cheap, direct, safe, or natural in this environment instead of leaving it as an unexplained choice.
 - Land the story back on the actual signals, helper function, syntax form, API surface, command position, or state transition where the rule appears.
