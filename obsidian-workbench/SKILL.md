@@ -34,10 +34,10 @@ Use when the main output is a durable Obsidian note revision or creation.
 
 - Read `references/family-routing.md`, `references/style-rules.md`, `references/story-patterns.md`, `references/recipe-policy.md`, and `references/review-workflow.md`.
 - Route by governing root: note family first, then note structure.
-- For `## Story`, use the general causal story pattern:
-  practical use -> simplest idea or naive reading -> limitation or ambiguity -> refined rule or added mechanism -> new boundary or usage consequence -> final mental model.
+- For `## Story`, use the tighter pressure-driven story pattern:
+  concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
 - For system or design topics, use the designer-thought form of the same pattern:
-  simplest idea -> problem -> new mechanism -> new boundary -> final shape.
+  concrete pressure -> simplest workable idea -> pictured failure or unfairness -> mechanism that fixes that specific problem -> why this fix fits the hardware/workflow -> guarantee and remaining boundary -> final shape.
 - Only log new note creation when the target vault's workflow requires it. Do not log ordinary edits unless the vault rule explicitly says to.
 
 ### 3. Learning checklist ingest mode

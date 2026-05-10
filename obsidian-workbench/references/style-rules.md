@@ -19,16 +19,22 @@ Apply these after routing chooses the note family.
 ## Story Construction
 - Start from the common root and let each later move grow from the problem created by the earlier move.
 - When the user wants a stronger story, narrative, first-principles explanation, or a more natural `## Story`, write it like progressive discovery rather than like a textbook summary.
-- For durable notes in general, use the causal story pattern: practical use -> simplest idea or naive reading -> limitation, ambiguity, or breakage -> refined rule or added mechanism -> new boundary or usage consequence -> final mental model.
-- For design notes, use the designer's version of that same pattern: simplest idea -> problem or unfairness -> new mechanism -> new boundary or tradeoff -> final shape.
+- For durable notes in general, use the tighter pressure-driven story pattern: concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage, ambiguity, or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
+- The background should arrive first and stay brief, but it should not be vague. Show the surrounding system, actor, data path, resource limit, or decision pressure that makes the local reasoning necessary before you start the derivation.
+- For design notes, use the designer's version of that same pattern: concrete pressure -> simplest workable idea -> pictured failure or unfairness -> new mechanism -> why that mechanism fits the hardware or workflow -> guarantee and remaining tradeoff/boundary -> final shape.
+- In design notes, weave the story as one continuous growth path from beginning to end. Do not present the final module split, final signal partition, or final abstraction first and then explain its parts. Let the final structure appear only after the earlier pressure and fixes make it necessary.
+- Use multiple `###` subsections when they make the story beats visible. Extra detail is good when it is carrying the causal chain forward; do not over-compress a design note until the logic turns into a thin summary.
 - For concept or syntax notes, the "new mechanism" step may be a clearer interpretation rather than a hardware block or structural change. The root is still the same: old reading fails, so the note introduces the rule that repairs it.
 - Start from the obvious idea or naive mental model when that helps the reader feel the problem.
-- Make each next section earned: `idea -> breakage/boundary -> needed insight -> refined structure`.
+- Make each next section earned: `pressure -> naive move -> visible breakage -> needed insight -> exact rule -> boundary`.
 - Show the internal logic in direct language. The reader should feel why the next paragraph has to exist.
-- Put concrete examples before the abstract rule when possible.
+- Put concrete examples before the abstract rule when possible, especially for the breakage step.
+- After introducing the fix, say why this fix is cheap, direct, safe, or natural in this environment instead of leaving it as an unexplained choice.
+- Land the story back on the actual signals, helper function, syntax form, API surface, command position, or state transition where the rule appears.
+- State clearly what the note's mechanism guarantees and what it does not guarantee. If safety depends on an outside assumption, sizing choice, or later stage, say that explicitly.
 - Use small critical code or command fragments only at the moment they prove the idea. Do not dump large listings when the local logic only needs a few lines.
 - End by reassembling the full picture so the reader can see how the pieces fit.
-- Use `###` subsection titles inside long stories to mark the narrative beats. The titles should expose the arc, not just label topics mechanically.
+- Use `###` subsection titles inside stories whenever they help mark the narrative beats. The titles should expose the arc, not just label topics mechanically.
 - If one story becomes too large for one note, use a big-story plus focused-side-story pattern: keep the parent note for the governing arc and move durable sub-stories into child notes.
 
 ## Teaching Shape

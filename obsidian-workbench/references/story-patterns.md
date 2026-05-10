@@ -6,32 +6,51 @@ Use these patterns when a note should teach through a strong `## Story` instead 
 
 Use this as the default pattern for atomic durable notes of any kind: concepts, syntax, commands, APIs, mechanisms, or designs.
 
-1. Start from practical use.
-   Say what the thing is generally used for, so the reader gets a hands-on bridge immediately.
+1. Start from the concrete problem frame and practical use.
+   First bring in the background, but do it concretely: what surrounding system, actor set, workflow, resource, or decision pressure makes this note exist. Then say what the thing is generally used for, so the reader gets a hands-on bridge immediately.
 
 2. Start from the simplest idea or naive reading.
-   Use the version a smart learner would naturally believe first.
+   Use the version a smart learner or designer would naturally believe first.
 
-3. Show the pressure that breaks that first reading.
-   This can be a failure mode, ambiguity, exception, hidden actor, or missing boundary.
+3. Show the exact pressure that breaks that first reading.
+   Use a pictured failing case, ambiguity, exception, hidden actor, or missing boundary. The reader should be able to point at what goes wrong, not just hear that something is "insufficient."
 
 4. Introduce the refined rule.
    For design notes, this may be a new mechanism. For concept or syntax notes, this may be the interpretation that repairs the wrong reading.
 
-5. State the new boundary or usage consequence.
-   Say what the refined rule now permits, forbids, or changes in practice.
+5. Explain why this refined rule fits this environment.
+   Say why this mechanism or interpretation is the right local answer here: cheaper, safer, shallower, clearer, more conservative, easier to prove, or better matched to the surrounding workflow.
 
-6. Close with a compact final mental model.
+6. Land the rule back on the live implementation or exact operational site.
+   Name the signal, helper function, API surface, syntax form, command position, or state transition where the rule actually appears.
+
+7. State the guarantee, non-guarantee, and safety boundary.
+   Say what this rule now gives the reader, and also what it still does not solve or what outside assumption keeps it safe.
+
+8. Close with a compact final mental model.
    End with the short rule the reader should be able to carry forward and reuse.
 
 The core chain is:
-- practical use -> simplest idea -> breakage or ambiguity -> refined rule -> boundary or consequence -> final mental model
+- concrete problem frame and practical use -> simplest idea -> exact breakage -> refined rule -> why it fits here -> exact landing -> guarantee and boundary -> final mental model
+
+For design-heavy notes, this chain should read like one continuous finishing story, not like a tour of finished parts. The preferred feeling is:
+- unmet job -> naive build -> visible failure -> minimal fix -> new operating rule -> implementation landing -> final boundary
+
+Do not start by announcing the final block split or final architecture and then unpacking it. Let the split appear as the answer to the failure that came before it.
+Use as many `###` beats as needed to keep that growth path visible. More detail is good when it makes the build path, proof boundary, or final split feel inevitable instead of abrupt.
 
 Examples of how this general pattern changes by note type:
-- design note: simple design -> unfairness or failure -> added mechanism -> new tradeoff -> final shape
-- concept note: simple intuition -> hidden exception -> corrected concept -> scope boundary -> final meaning
-- syntax note: naive reading of syntax -> ambiguous or wrong behavior -> exact syntax rule -> when to use it -> final usage rule
-- command note: obvious command guess -> misleading output or proof gap -> correct workflow step -> permitted conclusion -> final workflow rule
+- design note: concrete engineering pressure -> simple design -> unfairness or failure -> added mechanism -> why it fits the hardware -> guarantee/non-guarantee -> final shape
+- concept note: practical situation -> simple intuition -> hidden exception -> corrected concept -> why that correction matches the real actor model -> scope boundary -> final meaning
+- syntax note: practical writing goal -> naive reading of syntax -> ambiguous or wrong behavior -> exact syntax rule -> why the grammar behaves that way -> usage boundary -> final usage rule
+- command note: practical diagnostic goal -> obvious command guess -> misleading output or proof gap -> correct workflow step -> why this stage belongs here -> permitted/forbidden conclusion -> final workflow rule
+
+The opening background should usually answer one of these before the local reasoning starts:
+- what larger path or subsystem this belongs to
+- who reads, writes, drives, or consumes the thing
+- what practical task makes the distinction in this note matter
+- what resource or latency pressure is shaping the choice
+- what kind of mistake a reader would make without this note
 
 ## Async-FIFO Pattern
 
@@ -151,10 +170,11 @@ This pattern matters because `async_fifo _next state.md` and `async_fifo_design_
 ## Writing Rules That Matter Here
 
 - Start from use before mechanism.
+- Bring in enough background before the mechanism so the reader knows why this local story matters.
 - Say what the thing is, not only what it does.
 - For durable notes in general, tell the causal learning path, not just the finished abstraction.
-- For design-heavy notes, tell the designer's step-by-step finishing path, not only the finished abstraction. A strong story often sounds like: "the simple version would be X, that breaks because Y, so the design adds Z, which fixes Y but creates boundary B, so the final usage rule is C."
-- For concept-heavy notes, use the same root in concept form: "the first reading suggests X, that misses Y, so the real rule is Z, which matters because B."
+- For design-heavy notes, tell the designer's step-by-step finishing path, not only the finished abstraction. A strong story often sounds like: "the pressure here is P, the easy version is X, that breaks in case Y, so the design adds Z, Z fits because of hardware/workflow reason H, and the result guarantees G but still does not guarantee N."
+- For concept-heavy notes, use the same root in concept form: "the first practical situation suggests X, that fails because of hidden fact Y, so the real rule is Z, which fits the true actor model because B, and its boundary is C."
 - Make each next paragraph earned by the previous one.
 - Prefer one governing root over a list of disconnected facts.
 - Make child links carry jobs, not only titles. The sentence before the link should say what question the child note resolves.
