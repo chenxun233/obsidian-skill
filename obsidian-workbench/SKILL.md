@@ -1,6 +1,6 @@
 ---
 name: obsidian-workbench
-description: "Unified Obsidian vault work in one installable skill: read or search vault content, create or revise durable notes with `## Story`, build learning checklists from raw sources, answer from a maintained Obsidian wiki, fix Obsidian Markdown syntax, edit Bases `.base` files, use the Obsidian CLI, or debug Obsidian code-block CSS issues. Use when you want one portable Obsidian skill pack instead of many separate folders."
+description: "Unified Obsidian vault work in one installable skill: read or search vault content, create or revise durable notes with `## Story`, build learning checklists from raw sources including PDF sources, answer from a maintained Obsidian wiki, fix Obsidian Markdown syntax, edit Bases `.base` files, use the Obsidian CLI, or debug Obsidian code-block CSS issues. Use when you want one portable Obsidian skill pack instead of many separate folders."
 ---
 
 # Obsidian Workbench
@@ -45,6 +45,7 @@ Use when the main output is a durable Obsidian note revision or creation.
 Use when raw material should become a reusable learning checklist rather than a compact durable note.
 
 - Read `references/source-modes.md`, `references/story-led-checklists.md`, `references/wiki-ops-conventions.md`, and `references/review-rubric.md`.
+- If the source is a PDF, also read `references/pdf-ingest-workflow.md` before extracting or summarizing.
 - Treat the source as immutable.
 - Prefer revising the matching checklist over creating a duplicate.
 - Keep the checklist incremental and story-led, with checkpoints attached where the learner now needs them.

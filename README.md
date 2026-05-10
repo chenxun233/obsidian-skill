@@ -7,6 +7,7 @@ It replaces the old many-folder shape with one portable entry skill that bundles
 - vault read/search mode
 - durable note writing
 - learning checklist ingest
+- PDF-aware ingest support for PDF sources
 - compiled wiki query and maintenance
 - Markdown syntax fixes
 - Bases `.base` editing
