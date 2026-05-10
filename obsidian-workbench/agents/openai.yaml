@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Workbench"
+  short_description: "One portable Obsidian vault toolkit"
+  default_prompt: "Use this skill when working in an Obsidian vault, then route to the right mode before editing."
