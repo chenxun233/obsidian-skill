@@ -54,6 +54,7 @@ For design-heavy notes, this chain should read like one continuous finishing sto
 
 Do not start by announcing the final block split or final architecture and then unpacking it. Let the split appear as the answer to the failure that came before it.
 Use as many `###` beats as needed to keep that growth path visible. More detail is good when it makes the build path, proof boundary, or final split feel inevitable instead of abrupt.
+Do not save `###` beats only for big notes. If a short note still contains several distinct reasoning turns, split them so the reader can see the ladder: pressure, breakage, repair, landing, boundary.
 
 Examples of how this general pattern changes by note type:
 - design note: concrete engineering pressure -> simple design -> unfairness or failure -> added mechanism -> why it fits the hardware -> guarantee/non-guarantee -> final shape
@@ -69,6 +70,9 @@ The opening background should usually answer one of these before the local reaso
 - what kind of mistake a reader would make without this note
 
 If the reader would still have to ask "why did the story jump from here to there?", the note is still missing a bridge. Add the missing actor, failure case, tradeoff, or stage transition instead of hiding the gap behind a cleaner summary.
+If the story suddenly introduces a concrete object such as a sysfs node, file, API, struct, command, or kernel object, add the missing transition first: what exact new question made the reader go looking for that object? Do not jump straight from "the first idea failed" to "here is the object" without showing how that object entered the search path.
+If the note uses a compressed phrase such as "shared boundary", "same path", "same actor", or "same state", unpack what is actually shared and why that sharing changes the rule. Do not assume the phrase explains itself.
+When the boundary or hidden mechanism is hard to picture, add a small concrete example or miniature case so the reader can see the rule happen instead of only hearing a paraphrase.
 
 ## Async-FIFO Pattern
 
@@ -198,6 +202,7 @@ This pattern matters because `async_fifo _next state.md` and `async_fifo_design_
 - For concept-heavy notes, use the same root in concept form: "the first practical situation suggests X, that fails because of hidden fact Y, so the real rule is Z, which fits the true actor model because B, and its boundary is C."
 - Make each next paragraph earned by the previous one.
 - Do not skip stage transitions. If a move in the story would not feel inevitable to a careful reader, add the missing step.
+- When landing on a concrete object-level explanation, make the search question visible first: what did the previous stage fail to answer, and why is this object the next thing the reader must inspect?
 - Prefer one governing root over a list of disconnected facts.
 - Make child links carry jobs, not only titles. The sentence before the link should say what question the child note resolves.
 - Use exact RTL names only after the conceptual bridge exists; then use them as proof anchors.

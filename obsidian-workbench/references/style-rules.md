@@ -24,12 +24,14 @@ Apply these after routing chooses the note family.
 - The background should arrive first and stay brief, but it should not be vague. Show the surrounding system, actor, data path, resource limit, or decision pressure that makes the local reasoning necessary before you start the derivation.
 - For design notes, use the designer's version of that same pattern: concrete pressure -> simplest workable idea -> pictured failure or unfairness -> new mechanism -> why that mechanism fits the hardware or workflow -> guarantee and remaining tradeoff/boundary -> final shape.
 - In design notes, weave the story as one continuous growth path from beginning to end. Do not present the final module split, final signal partition, or final abstraction first and then explain its parts. Let the final structure appear only after the earlier pressure and fixes make it necessary.
-- Use multiple `###` subsections when they make the story beats visible. Extra detail is good when it is carrying the causal chain forward; do not over-compress a design note until the logic turns into a thin summary.
+- Use multiple `###` subsections when they make the story beats visible. This is not only for large design notes. Even a short atomic note should use visible `###` beats when that helps the reader feel the causal ladder instead of facing one dense block of logic. Extra detail is good when it is carrying the causal chain forward; do not over-compress a design note until the logic turns into a thin summary.
 - For concept or syntax notes, the "new mechanism" step may be a clearer interpretation rather than a hardware block or structural change. The root is still the same: old reading fails, so the note introduces the rule that repairs it.
 - Start from the obvious idea or naive mental model when that helps the reader feel the problem.
 - Make each next section earned: `pressure -> naive move -> visible breakage -> needed insight -> exact rule -> boundary`.
 - Show the internal logic in direct language. The reader should feel why the next paragraph has to exist.
 - If the reader would feel a jump between two stages, add the missing bridge instead of compressing it away.
+- If you use a compressed phrase for a hidden constraint or boundary, unpack what is actually shared, blocked, or coupled, and why that fact changes the reasoning.
+- If that hidden boundary would still be hard to picture, add a small concrete example before moving on.
 - Put concrete examples before the abstract rule when possible, especially for the breakage step.
 - After introducing the fix, say why this fix is cheap, direct, safe, or natural in this environment instead of leaving it as an unexplained choice.
 - Land the story back on the actual signals, helper function, syntax form, API surface, command position, or state transition where the rule appears.
