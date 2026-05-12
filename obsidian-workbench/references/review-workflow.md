@@ -4,6 +4,8 @@ Use this workflow for any Obsidian note creation or note modification.
 
 ## Teacher Workflow
 - The writer is the teacher.
+- If a usable teacher agent already exists in the session, reuse that same teacher agent instead of spawning a new one.
+- DO NOT create a new agent with the same function while an existing one is still usable for that function.
 - The teacher creates or patches the note so it teaches from common root to direct use.
 - The teacher must also perform one explicit self-review pass before the work is treated as complete.
 
@@ -29,4 +31,6 @@ The teacher self-review must check all three lenses in one pass:
 
 ## Fallback
 - Simple append-only daily-log edits do not need this workflow.
+- If a teacher agent already exists and remains usable, continue using it for later note-making turns in the same session instead of creating another teacher agent.
+- The same reuse rule applies to any reviewer/helper role as well: do not spawn another agent for the same job while the existing one is still usable.
 - If subagents are still unavailable after agent cleanup and one retry, or are blocked by a higher-priority runtime rule, state that exact blocker and do the same teacher self-review locally.

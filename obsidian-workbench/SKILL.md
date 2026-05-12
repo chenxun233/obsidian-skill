@@ -34,6 +34,7 @@ Use when the main output is a durable Obsidian note revision or creation.
 
 - Read `references/family-routing.md`, `references/style-rules.md`, `references/story-patterns.md`, `references/recipe-policy.md`, and `references/review-workflow.md`.
 - Route by governing root: note family first, then note structure.
+- In each note, not only the story but also the concrete implementation path matters. Provide examples when they are needed so the reader can see the exact way to apply or implement the concept, not only the abstract explanation.
 - For `## Story`, use the pressure-driven story pattern as a natural problem-solving flow, not a rigid checklist:
   concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
 - Treat that pattern as an outline to refer to. The reader should finish with a solid grasp of what the thing is, why it exists, what problem it solves, why it became the current state, and how each stage leads to the next without hidden gaps.

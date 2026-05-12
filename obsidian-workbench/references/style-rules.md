@@ -7,6 +7,7 @@ Apply these after routing chooses the note family.
 - In `## Story`, say what the concept essentially is, not only what it does.
 - At the very beginning, say what the thing is generally used for so the reader gets a hands-on bridge early.
 - Merge definition into the story by default; do not create a separate `## Definition` section unless the task clearly needs it.
+- In each note, provide examples when they are needed to make the concept touchable. The reader should be able to see the exact way to apply, use, or implement the idea instead of stopping at abstract story alone.
 
 ## Story Order
 - Every story must follow a visible ordering rule.
@@ -33,6 +34,7 @@ Apply these after routing chooses the note family.
 - If you use a compressed phrase for a hidden constraint or boundary, unpack what is actually shared, blocked, or coupled, and why that fact changes the reasoning.
 - If that hidden boundary would still be hard to picture, add a small concrete example before moving on.
 - Put concrete examples before the abstract rule when possible, especially for the breakage step.
+- When the concept has an implementation shape, command shape, API shape, state transition, or code path the reader is likely to use directly, include a concrete example of that shape instead of leaving the note at definition level.
 - After introducing the fix, say why this fix is cheap, direct, safe, or natural in this environment instead of leaving it as an unexplained choice.
 - Land the story back on the actual signals, helper function, syntax form, API surface, command position, or state transition where the rule appears.
 - State clearly what the note's mechanism guarantees and what it does not guarantee. If safety depends on an outside assumption, sizing choice, or later stage, say that explicitly.
@@ -45,16 +47,26 @@ Apply these after routing chooses the note family.
 - Start from the common root.
 - In diagnostic or procedural notes, use the workflow ladder:
   - previous proof -> current stage -> evidence shape -> permitted conclusion -> forbidden conclusion -> next valid step
+- In Flow notes and Recipe notes, make each important step state the missing artifact or state transition explicitly when it matters:
+  - prerequisite -> current step -> obtained handle/value/state -> why that output is needed next
+- Do not assume the reader will infer what was obtained. If the step exists to produce a group id, fd, mapped address, ownership relation, enabled mode, or similar artifact, name that output directly.
+- Keep Flow and Recipe roles separate. Flow notes should explain the ordered why-this-comes-next chain and link outward when one step needs reusable implementation detail. Recipe notes should hold the step-local code order, variable transitions, and directly usable snippets.
+- In foldered Recipe notes that act as parent procedures, prefer short `###` step titles such as `### Align`, `### Bind`, or `### Commit` over long sentence-like step labels. Put the explanatory body under the `###` heading instead of forcing the whole step title to carry the explanation.
+- When a parent Recipe hands off to child Recipe notes, the parent should use those short `###` sections as the visible chain and then state the local ladder under each section:
+  - prerequisite
+  - what you obtain
+  - why that obtained thing enables the next step
+  - the child Recipe link when one exists
 
 ## Link Discipline
 - Add only strong links.
 - Avoid repeated links that do not add a new local job.
 - Reuse the nearest strong root link and add another link only when the local paragraph or checkpoint needs a different landing target.
 - When naming reusable kernel functions or similar note-worthy APIs in durable notes, use plain Obsidian wikilinks such as [[local_bh_disable()]] instead of source-style backticks, even if the target note does not exist yet.
-- Never wrap a wikilink in backticks. The form `` `[[lock_sock()]]` `` is forbidden because it renders as code instead of a link; write [[lock_sock()]].
+- Never wrap a wikilink in backticks. Write [[lock_sock()]], not an inline-code version of that same wikilink, because a wikilink is navigation knowledge rather than a code literal.
 - This rule applies to ALL note families: Knowledge base, Flow, Deep, Recipes, Collections, Relationship, Indexes, and learning checklists.
-- The wrong pattern `` `[[tcp_sk()]]` `` appears when the writer confuses a wikilink with a code literal. A wikilink is knowledge navigation, not code. Only wrap C identifiers in backticks when they are NOT wikilinks: `snd_una` (a struct field), `sk->sk_lock` (a member access), `tcp_prot` (a global variable). When the identifier IS a wikilink target, drop the backticks.
-- After writing or editing any note, scan for `` `[[ `` and remove the surrounding backticks from every wikilink found.
+- The wrong pattern appears when the writer confuses a wikilink with a code literal. A wikilink is knowledge navigation, not code. Only wrap C identifiers in backticks when they are NOT wikilinks: `snd_una` (a struct field), `sk->sk_lock` (a member access), `tcp_prot` (a global variable). When the identifier IS a wikilink target, drop the backticks.
+- After writing or editing any note, scan for the pattern backtick plus `[[` and remove the surrounding backticks from every wikilink found.
 
 ## Family Shape
 - Keep command families in same-name folders.

@@ -61,6 +61,7 @@ Examples of how this general pattern changes by note type:
 - concept note: practical situation -> simple intuition -> hidden exception -> corrected concept -> why that correction matches the real actor model -> scope boundary -> final meaning
 - syntax note: practical writing goal -> naive reading of syntax -> ambiguous or wrong behavior -> exact syntax rule -> why the grammar behaves that way -> usage boundary -> final usage rule
 - command note: practical diagnostic goal -> obvious command guess -> misleading output or proof gap -> correct workflow step -> why this stage belongs here -> permitted/forbidden conclusion -> final workflow rule
+- flow or recipe note: practical job -> first missing prerequisite -> exact step -> concrete obtained artifact or state -> why that artifact permits the next step -> next step
 
 The opening background should usually answer one of these before the local reasoning starts:
 - what larger path or subsystem this belongs to
@@ -72,7 +73,10 @@ The opening background should usually answer one of these before the local reaso
 If the reader would still have to ask "why did the story jump from here to there?", the note is still missing a bridge. Add the missing actor, failure case, tradeoff, or stage transition instead of hiding the gap behind a cleaner summary.
 If the story suddenly introduces a concrete object such as a sysfs node, file, API, struct, command, or kernel object, add the missing transition first: what exact new question made the reader go looking for that object? Do not jump straight from "the first idea failed" to "here is the object" without showing how that object entered the search path.
 If the note uses a compressed phrase such as "shared boundary", "same path", "same actor", or "same state", unpack what is actually shared and why that sharing changes the rule. Do not assume the phrase explains itself.
+If the note introduces a grouping or ownership object, state the cardinality explicitly when it matters: is this one-to-one, one-to-many, many-to-one, or conditional? Do not assume the reader will infer whether a group, container, queue, or handle can own exactly one member or several.
 When the boundary or hidden mechanism is hard to picture, add a small concrete example or miniature case so the reader can see the rule happen instead of only hearing a paraphrase.
+For flow and recipe writing, do not stop at "do step X." The reader must be able to answer four linked questions at each major step: what did I need before this, what exact thing did I get from this step, what is that thing called in code or system terms, and why does obtaining that thing make the next step legal or possible.
+When a major step has a reusable implementation note behind it, keep the Flow note focused on the artifact gained and the permission it grants. Move the exact call sequence, local variables, and code-snippet proof into the Recipe note and link to that Recipe from the flow step.
 
 ## Async-FIFO Pattern
 
