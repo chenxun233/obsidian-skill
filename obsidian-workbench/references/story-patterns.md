@@ -26,11 +26,17 @@ Use this as the default pattern for atomic durable notes of any kind: concepts, 
 6. Land the rule back on the live implementation or exact operational site.
    Name the signal, helper function, API surface, syntax form, command position, or state transition where the rule actually appears.
 
-7. State the guarantee, non-guarantee, and safety boundary.
+7. Land on the human-side interaction surface when one exists.
+   If a programmer, operator, or user can control or influence this mechanism, say how. If there is no direct control surface, say that clearly and explain what mechanism acts instead.
+
+8. State the guarantee, non-guarantee, and safety boundary.
    Say what this rule now gives the reader, and also what it still does not solve or what outside assumption keeps it safe.
 
-8. Close with a compact final mental model.
+9. Close with a compact final mental model.
    End with the short rule the reader should be able to carry forward and reuse.
+
+10. Promote major follow-up questions into sibling `##` sections when that clarifies the note.
+   If the reader will naturally ask direct next questions such as who enters a state, what ends it, what the programmer can control, or what practical boundary comes next, move those into sibling `##` sections rather than forcing all of them into the story body.
 
 This should feel like a mind moving through a real question:
 - what job or pressure made this thing necessary
@@ -42,10 +48,20 @@ This should feel like a mind moving through a real question:
 - what the result guarantees, and where its boundary still is
 
 The core chain is:
-- concrete problem frame and practical use -> simplest idea -> exact breakage -> refined rule -> why it fits here -> exact landing -> guarantee and boundary -> final mental model
+- concrete problem frame and practical use -> simplest idea -> exact breakage -> refined rule -> why it fits here -> exact landing -> human-side control or interaction -> guarantee and boundary -> final mental model
 
 Another good way to hear the same pattern is:
 - why this exists -> what problem showed up -> what simple move came first -> where it broke -> what changed -> why it became today's shape -> what you can now rely on
+
+The story does not need to carry every useful question. A strong note can use:
+- one `## Story` section for the governing root
+- then sibling `##` sections for the direct follow-up landings the reader is likely to want next
+
+Common good siblings are:
+- `## Programmer Interaction`
+- `## Who usually enters ...`
+- `## What ends ...`
+- `## Boundary`
 
 Do not force every note to use every beat with the same visible weight. Some notes need more time on the failure case. Some need more time on the implementation landing. Some can merge two adjacent beats into one paragraph. The real rule is: do not skip the bridge the reader needs in order to feel why the next stage had to happen.
 

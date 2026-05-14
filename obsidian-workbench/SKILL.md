@@ -35,6 +35,10 @@ Use when the main output is a durable Obsidian note revision or creation.
 - Read `references/family-routing.md`, `references/style-rules.md`, `references/story-patterns.md`, `references/recipe-policy.md`, and `references/review-workflow.md`.
 - Route by governing root: note family first, then note structure.
 - In each note, not only the story but also the concrete implementation path matters. Provide examples when they are needed so the reader can see the exact way to apply or implement the concept, not only the abstract explanation.
+- When the concept has a programmer-visible or operator-visible interaction surface, include an explicit human-side control/interaction section. State what can be directly controlled, exactly how, and if nothing direct is exposed, say that and explain what mechanism acts instead.
+- Do not self-link the note name inside the note. When the note needs to refer to itself, use bold text for its own name instead of a wikilink to itself.
+- When several constraints, causes, options, or consequences are parallel peers, do not bury them in one long sentence. Break them into visible list items. Use bullets for unordered peers and numbered items only when explicit indexing or the local note pattern makes numbering useful.
+- Use `## Story` for the governing root. If the note also needs direct landings such as who enters a state, what ends it, what a programmer can control, or another practical boundary, promote those into sibling `##` sections instead of forcing everything into `## Story`.
 - For `## Story`, use the pressure-driven story pattern as a natural problem-solving flow, not a rigid checklist:
   concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
 - Treat that pattern as an outline to refer to. The reader should finish with a solid grasp of what the thing is, why it exists, what problem it solves, why it became the current state, and how each stage leads to the next without hidden gaps.
@@ -90,6 +94,15 @@ Use for fenced code-block styling problems involving themes, CSS snippets, or th
 - Patch narrowly.
 - Check enabled snippets first.
 - Prefer live DOM or rendered evidence before broad CSS changes.
+
+### 9. Figure prompt mode
+
+Use when the user wants an image prompt to visualize a concept, relationship, or process for an external image-generation tool (ChatGPT, DALL-E, Midjourney, etc.).
+
+- Read `references/figure-prompt.md`.
+- Identify the main concept and any supporting concepts that help understanding, even if the user did not ask for them.
+- Produce a self-contained prompt the user can paste directly into an image tool — no explanation needed, just the prompt.
+- Keep the figure simple: one core relationship, minimal text, labeled boxes and arrows, clean style line at the end.
 
 ## Mode Escalation
 
