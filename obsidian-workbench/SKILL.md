@@ -33,18 +33,8 @@ Use for simple read, list, grep, or one-off note lookup work.
 Use when the main output is a durable Obsidian note revision or creation.
 
 - Read `references/family-routing.md`, `references/style-rules.md`, `references/story-patterns.md`, `references/recipe-policy.md`, and `references/review-workflow.md`.
-- Route by governing root: note family first, then note structure.
-- In each note, not only the story but also the concrete implementation path matters. Provide examples when they are needed so the reader can see the exact way to apply or implement the concept, not only the abstract explanation.
-- When the concept has a programmer-visible or operator-visible interaction surface, include an explicit human-side control/interaction section. State what can be directly controlled, exactly how, and if nothing direct is exposed, say that and explain what mechanism acts instead.
-- Do not self-link the note name inside the note. When the note needs to refer to itself, use bold text for its own name instead of a wikilink to itself.
-- When several constraints, causes, options, or consequences are parallel peers, do not bury them in one long sentence. Break them into visible list items. Use bullets for unordered peers and numbered items only when explicit indexing or the local note pattern makes numbering useful.
-- Use `## Story` for the governing root. If the note also needs direct landings such as who enters a state, what ends it, what a programmer can control, or another practical boundary, promote those into sibling `##` sections instead of forcing everything into `## Story`.
-- For `## Story`, use the pressure-driven story pattern as a natural problem-solving flow, not a rigid checklist:
-  concrete problem frame and practical use -> simplest idea or naive reading -> exact breakage or failing case -> refined rule or added mechanism -> why that rule fits this environment -> exact implementation or operational landing -> guarantee, non-guarantee, and safety boundary -> final mental model.
-- Treat that pattern as an outline to refer to. The reader should finish with a solid grasp of what the thing is, why it exists, what problem it solves, why it became the current state, and how each stage leads to the next without hidden gaps.
-- When a story introduces a concrete object, file, sysfs node, API, struct, or command as the answer, first explain what new question or pressure made the reader need that object at all. Do not jump straight from failure case to object anatomy without showing why the story had to go looking for that object.
-- For system or design topics, use the designer-thought form of the same pattern:
-  concrete pressure -> simplest workable idea -> pictured failure or unfairness -> mechanism that fixes that specific problem -> why this fix fits the hardware/workflow -> guarantee and remaining boundary -> final shape.
+- Before writing, scan the **⚠ Common Mistakes** section at the top of `references/style-rules.md` — those are the rules most often violated.
+- Route by governing root: note family first, then note structure. All style and story rules live in the references above.
 - Only log new note creation when the target vault's workflow requires it. Do not log ordinary edits unless the vault rule explicitly says to.
 
 ### 3. Learning checklist ingest mode

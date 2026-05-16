@@ -2,7 +2,19 @@
 
 Apply these after routing chooses the note family.
 
+## ⚠ Common Mistakes — Check These First
+
+These are the rules most often violated. Scan for them before finishing any note.
+
+1. **Wikilink, not backtick, for any concept that has a note.** Write `[[noexcept]]`, not `` `noexcept` ``. Write `[[std vector|std::vector]]`, not `` `std::vector` ``. If the concept has a note in the vault, it must be a wikilink — even when the display text looks like code. Use `[[note name|display text]]` to control what the reader sees.
+2. **Never wrap a wikilink in backticks.** `` `[[lock_sock()]]` `` is always wrong. Write `[[lock_sock()]]`.
+3. **No naming preamble missing.** Every durable note must open with a plain-prose preamble (before `## Story`) explaining what the name means and why it fits the concept.
+4. **No `### The refined rule` subsection.** The refined rule must emerge as a paragraph after the breakage — never as a named subsection.
+5. **Closing sections are top-level `##`, never nested inside `## Story`.** `## Final mental model`, `## Guarantee and boundary`, `## Common bug` are always top-level.
+6. **Do not self-link.** Use **bold** for the note's own name in prose — never a wikilink to itself. Example: inside the `SO_REUSEADDR` note, write **SO_REUSEADDR**, not `[[SO_REUSEADDR]]`.
+
 ## Story Presence
+- When a durable note benefits from fast interview review or quick later re-entry, add a concise `## Recap` at the front before the naming preamble. Keep it to a few high-signal bullets: root rule, key contrast, common trap. Do not add `## Recap` mechanically to every note.
 - Durable notes should include `## Story`.
 - In `## Story`, say what the concept essentially is, not only what it does.
 - At the very beginning, say what the thing is generally used for so the reader gets a hands-on bridge early.
@@ -10,7 +22,7 @@ Apply these after routing chooses the note family.
 - Use `## Story` for the governing root. Do not force every important subquestion to stay inside it when the note becomes clearer with sibling `##` sections.
 - In each note, provide examples when they are needed to make the concept touchable. The reader should be able to see the exact way to apply, use, or implement the idea instead of stopping at abstract story alone.
 - When the concept has a programmer-visible, operator-visible, or user-visible interaction surface, include an explicit section that lands on that human side. Say what can be directly controlled, how to do it, give a small example when useful, and if there is no direct control surface, say that plainly and explain what mechanism acts instead.
-- Do not use a wikilink to the note itself inside that note. When the note needs to say its own name, use bold text for the local note name instead of a self wikilink.
+- Do not use a wikilink to the note itself inside that note. When the note needs to say its own name, use bold text for the local note name instead of a self wikilink. Example: inside the `SO_REUSEADDR` note, write **SO_REUSEADDR**, not `[[SO_REUSEADDR]]`.
 - When several constraints, causes, options, consequences, or examples are parallel peers, do not compress them into one long sentence. Break them into visible list items so the peer structure is easy to scan. Use bullets for unordered peers and numbered items only when explicit indexing or the local note pattern makes numbering useful.
 
 ## Naming preamble
@@ -76,13 +88,14 @@ Apply these after routing chooses the note family.
 - Add only strong links.
 - Avoid repeated links that do not add a new local job.
 - Reuse the nearest strong root link and add another link only when the local paragraph or checkpoint needs a different landing target.
-- Do not self-link the current note. Use bold text for the note's own name when the local prose needs that name.
+- Do not self-link the current note. Use bold text for the note's own name when the local prose needs that name. Example: inside the `SO_REUSEADDR` note, write **SO_REUSEADDR**, not `[[SO_REUSEADDR]]`.
 - When naming reusable kernel functions or similar note-worthy APIs in durable notes, use plain Obsidian wikilinks such as [[local_bh_disable()]] instead of source-style backticks, even if the target note does not exist yet.
 - Never wrap a wikilink in backticks. Write [[lock_sock()]], not an inline-code version of that same wikilink, because a wikilink is navigation knowledge rather than a code literal.
 - This rule applies to ALL note families: Knowledge base, Flow, Deep, Recipes, Collections, Relationship, Indexes, and learning checklists.
 - The wrong pattern appears when the writer confuses a wikilink with a code literal. A wikilink is knowledge navigation, not code. Only wrap C identifiers in backticks when they are NOT wikilinks: `snd_una` (a struct field), `sk->sk_lock` (a member access), `tcp_prot` (a global variable). When the identifier IS a wikilink target, drop the backticks.
 - The rule also catches tokens whose surface form happens to use `[[ ]]` brackets, including C++ attributes: [[likely]], [[unlikely]], [[noreturn]], [[nodiscard]], [[fallthrough]], [[maybe_unused]], [[deprecated]]. The `[[ ]]` form IS the Obsidian wikilink form, so wrapping any such token in backticks creates the forbidden in-code-wikilink pattern even when the writer intended it as code syntax. Leave them as raw wikilinks; restructure the prose if you need to refer to one as a literal rather than a navigable concept.
 - After writing or editing any note, scan for the pattern backtick plus `[[` and remove the surrounding backticks from every wikilink found.
+- When a concept or keyword has a corresponding note in the vault, always use a wikilink — even when the display text looks like code. Use `[[note name|display text]]` to control what the reader sees. Example: `[[std vector|std::vector]]` and `[[noexcept]]` are correct; `` `std::vector` `` and `` `noexcept` `` are wrong when a note exists for those targets. The display text may use code formatting conventions, but the link itself must be a wikilink so Obsidian can navigate to it.
 - When a function or API already appears as a wikilink in the note's header relation table (Upper, Sibling, Related, Used in columns), do NOT repeat it as a wikilink in prose. Instead use `**bold**` for that name in the body text. The header table is the one canonical link; a second wikilink in the prose is noise.
 - When a function or API does NOT appear in the header relation table, link it as `[[name()]]` on first meaningful use in prose as usual.
 
