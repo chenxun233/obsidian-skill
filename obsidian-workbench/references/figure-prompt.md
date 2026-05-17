@@ -13,7 +13,24 @@ Produce a prompt that someone can hand to an image-generation tool (ChatGPT, DAL
 - **Include supporting concepts** that help the viewer understand the main concept — even if the user did not ask for them. A figure showing only the target concept in isolation is often less clear than one that shows it in context.
 - **Use spatial layout to encode meaning.** Hierarchy goes top-to-bottom or left-to-right. Containment shows "is part of." Arrows show flow or dependency. Size difference can suggest capacity or scale.
 - **Steps and sequences are welcome.** If the concept involves a process (fetch, translate, evict, unwind), a numbered step flow or a left-to-right timeline makes it clearer than a static box diagram.
+- **Faded or gray boxes signal off-critical-path work.** When some steps are bookkeeping or happen after the application call returns, render them visually lighter (gray, faded, smaller border) to signal they are not on the latency-critical path. Reserve full-color solid boxes for the steps that matter to the outcome.
 - **No decorative elements.** Clean lines, labeled boxes, labeled arrows. Black-and-white or minimal color (one color per category at most).
+
+## CPU swim lanes
+
+When a concept involves work running on different CPUs, use **horizontal swim lanes** — one lane per CPU, stacked vertically, with time flowing left to right. Each box sits in the lane of the CPU that executes it.
+
+Rules for swim lane figures:
+- Label each lane on the left margin (e.g., "Application CPU", "Housekeeping CPU").
+- Draw lane boundaries as thin light gray horizontal lines — visible but not dominant.
+- **Hardware steps** (NIC drains ring, DMA, etc.) do not belong to any CPU. Place them straddling the lane boundary or centered between lanes, with a note that they are hardware-bound.
+- **CPU handoff arrows** cross lane boundaries vertically. Draw them as a downward (or upward) arrow between the two lanes, labeled with the mechanism (e.g., "IPI (RPS)"). This crossing arrow is the key visual — it shows where CPU ownership changes.
+- **Temporal dividers** (e.g., "send() returns", "lock acquired") must span ONLY the height of their own path or lane group. Never extend a divider line into an unrelated path or timeline below it — this creates false visual coupling between independent flows.
+- **Accurate divider placement**: place a temporal marker exactly where the boundary occurs in the real execution. For example, "send() returns" belongs after the TX ring write (the last step inside the system call), not after the NIC drains the ring (which happens asynchronously after send() returns).
+
+## Cross-path connections
+
+When two separate timelines or paths represent two ends of one physical event (e.g., a sender and a receiver), connect them with a **dashed curved arrow** between the two timelines, labeled with the physical event ("packet leaves sender → arrives at receiver"). This makes the full chain visible without merging the two paths into one.
 
 ## What to include in the prompt
 

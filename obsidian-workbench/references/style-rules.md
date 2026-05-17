@@ -14,7 +14,8 @@ These are the rules most often violated. Scan for them before finishing any note
 6. **Do not self-link.** Use **bold** for the note's own name in prose — never a wikilink to itself. Example: inside the `SO_REUSEADDR` note, write **SO_REUSEADDR**, not `[[SO_REUSEADDR]]`.
 
 ## Story Presence
-- When a durable note benefits from fast interview review or quick later re-entry, add a concise `## Recap` at the front before the naming preamble. Keep it to a few high-signal bullets: root rule, key contrast, common trap. Do not add `## Recap` mechanically to every note.
+- When a durable note benefits from fast interview review or quick later re-entry, add a concise `## Recap` at the very front. Keep it to a few high-signal bullets: root rule, key contrast, common trap. Do not add `## Recap` mechanically to every note.
+- When `## Recap` is present, the naming preamble and opening bridge sentence must not float as plain prose directly below it — they would appear to be part of the Recap section. Instead, place them under a `## Introduction` heading that sits between `## Recap` and `## Story`. When there is no Recap, the naming preamble stays as plain prose before `## Story` as normal.
 - Durable notes should include `## Story`.
 - In `## Story`, say what the concept essentially is, not only what it does.
 - At the very beginning, say what the thing is generally used for so the reader gets a hands-on bridge early.
@@ -112,6 +113,10 @@ These are the rules most often violated. Scan for them before finishing any note
   ````
 - Use `->>` for messages that expect a reply (requests), and `-->>` for replies. Add `Note over` or `Note right of` annotations when a state change needs to be visible at that moment.
 - Apply this rule in both durable notes and query answers when the exchange has three or more steps or two or more actors.
+
+## Recipe notes
+
+Recipe notes do not need a `## Story`. They need a short background sentence or paragraph — one to three sentences that state what problem the recipe solves and when to reach for it — followed directly by the procedure. The background must answer "why would I need this?" without becoming a narrative. Closing sections (`## Verification`, `## Things to Mind`, `## Variations`) are fine; `## Story`, `## Final mental model`, and `## Common Trap` are not required and should not be added unless they serve a genuine purpose beyond the procedure itself.
 
 ## Family Shape
 - Keep command families in same-name folders.

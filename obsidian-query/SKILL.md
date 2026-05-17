@@ -20,3 +20,7 @@ Answer a question by searching the maintained Obsidian wiki. Search compiled not
 ## Logging shape
 
 Log the query as `## Query: <normalized summary>` with `### Answer`, `### Helpful Links`, and `### Persistence Decision` in the current daily log. Use the one-line creation form for any note created while answering. Do not log patches or rewrites.
+
+## Non-negotiable closing step
+
+**Every query invocation must end with a log entry.** This is not optional even when the answer is short, obvious, or conversational. Do not finish the response without appending the `## Query:` entry to the current daily log at `Wiki Ops/logs/YYYY-MM/YYYY-MM-DD.md`. If the log file does not exist yet for today, create it with `#log` as the first line before appending.
