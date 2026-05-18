@@ -16,7 +16,13 @@ Create or rewrite a durable Obsidian note. The output is a well-structured note 
 5. **For patches to existing notes — snapshot first**: read the file and record the current heading levels, section names, and key content before making any edit. This snapshot is the baseline for step 8.
 6. Write or rewrite the note following the rules below.
 7. **Wire outgoing links** — scan every concept name in the finished note. For each one that has a vault note, replace plain text or backtick code with `[[note name]]` or `[[note name|display text]]`. Never leave a linkable concept as raw text.
-8. **Wire incoming links** — search the vault for existing notes that mention this note's concept by name without a wikilink to it. At the first strong mention in each such note, add `[[this note's name]]`. Add only strong links — skip notes where the mention is passing or incidental.
+8. **Wire incoming links — lexical AND conceptual.** Two patterns; do both before declaring the note finished.
+
+   **(a) Lexical mentions.** Search the vault for existing notes that mention this note's concept *by name* without a wikilink to it. At the first strong mention in each, add `[[this note's name]]`. Add only strong links — skip notes where the mention is passing or incidental.
+
+   **(b) Bidirectional concept gap.** For every existing note that this new note links OUT to in step 7, also check whether the *reverse* direction belongs. The target may not contain the literal name of the new concept anywhere in its prose, yet a local sentence may still conceptually need this new note as a landing target. Find the strongest natural anchor in each target — usually the sentence whose local cause, mechanism, or definition conceptually requires the new note — and add the reverse wikilink there. If no natural anchor exists in the target's existing prose, skip that target and report it; never invent prose to justify a forced link.
+
+   Pattern (a) catches the easy lexical gaps. Pattern (b) catches the harder conceptual gaps a name search misses — e.g., a `Page Table` note that does not say "page fault" anywhere in its prose, but conceptually owns the present-bit-failure anchor where `[[page fault]]` belongs as the local landing target.
 9. **Verify completion** — before finishing, explicitly confirm all of the following or state why each does not apply:
    - [ ] Outgoing links wired (step 7 done)
    - [ ] Incoming links wired (step 8 done)
