@@ -17,8 +17,9 @@ Figures are created for **understanding the mechanism at a single glance** — n
 2. **If the concept has a vault note, read it before writing the prompt.** Do not reconstruct sequence or containment relationships from memory — read the note and copy the exact causal order and hierarchy from it. A function that contains internal logic must be drawn as a container box enclosing that logic, not as a peer step before it.
 3. Identify the main concept the user wants visualized.
 4. Identify supporting concepts that help understanding — include them even if the user did not ask, as long as they make the figure clearer.
-5. **Ruthlessly cut detail.** If an element does not directly serve the one-glance insight, remove it. Prefer fewer, larger, clearer elements over many small ones.
-6. Produce only the prompt itself — no explanation, no preamble. The output should be something the user can copy and paste immediately.
+5. **Pick the matching style** before writing the prompt. An algorithm trace over a data structure (linked list, array, stack, tree walk, sort pass, search step) uses the [Algorithm walkthrough style](#algorithm-walkthrough-style-hello-algo). A system or mechanism diagram (network pipeline, kernel path, scheduling flow) uses the [Lean style](#lean-style-preferred). A single static concept (containment hierarchy, taxonomy) uses Lean style without step numbering.
+6. **Ruthlessly cut detail.** If an element does not directly serve the one-glance insight, remove it. Prefer fewer, larger, clearer elements over many small ones.
+7. Produce only the prompt itself — no explanation, no preamble. The output should be something the user can copy and paste immediately.
 
 ## Output shape
 
@@ -62,3 +63,49 @@ Apply this style by default unless the user asks for a different style.
 **Icons over rectangles for real objects.** Use recognizable icons for hardware (NIC, server chassis, computer, phone). Use cylinders for buffers or FDs. Reserve plain rectangles for abstract concepts only.
 
 **Short signal/variable names on arrows.** Prefer names already in the code (e.g. EAGAIN, n, FIN, EPOLLET) over prose descriptions. An arrow labeled "EAGAIN" is clearer and shorter than "buffer empty signal returned".
+
+## Algorithm walkthrough style (hello-algo)
+
+Use this style when the figure shows an algorithm running step by step over a concrete data structure (linked list, array, stack, queue, tree, heap, sorted bars). Modelled on the figures in [hello-algo.com](https://www.hello-algo.com/) — clean, airy, one teaching beat per image.
+
+**One composite figure with stacked step rows.** A multi-step trace produces ONE prompt that yields ONE image containing all steps stacked vertically. Do not emit a series of per-step prompts. The reader scans the whole algorithm in one place; the steps share a consistent color legend and visual rhythm down the column, which is the actual teaching benefit.
+
+**Composite layout signature.** The single image is a portrait-ish canvas (taller than wide is fine — let the height grow with the number of steps), pure white background, with this fixed structure:
+
+- A short title strip at the very top — bold dark-gray text naming the algorithm and the example input (e.g. "Remove duplicates from sorted linked list — trace on 1→2→2→2→3→4→4→5"). One line only.
+- Below the title, a vertical stack of step rows. Each row is one horizontal band across the full canvas width.
+- Inside a row: on the far left, a light-gray rounded-rectangle `Step N` badge with dark-gray text. To its right, the diagram for that step (the linked list / array / data structure at this step). To the right of the diagram (or directly below it if the row is wide), a light-gray rounded-rectangle caption box with one short declarative sentence describing what this step does.
+- Between rows, a thin horizontal light-gray separator line, or just generous vertical whitespace — enough that each row reads as its own beat without scrolling the eye.
+- A small `www.hello-algo.com`-style watermark or attribution can be omitted; if added, place it bottom-right in light-gray small text.
+- For steps that contain a splice/insert sub-sequence (before → code rewrite → after), keep that mini before/after inside the row by stacking two sub-frames within the row with a short downward gray arrow between them whose label is the literal code rewrite. The row is still one row in the composite — just slightly taller than an advance-only row.
+
+**Three-tone color system, used consistently across the whole series.** Assign roles once and never reassign:
+
+- **Brand green** (#5FB28F-ish) = data values; node fill for linked-list nodes; bar fill for active-range array elements. Numeric labels above bars or inside nodes use the same green.
+- **Blue** = boundary or persistent pointer (i, j, head, P, prev). Caret marker, letter label, and any highlight rectangle border for that pointer's element all share the blue.
+- **Orange** = dynamic, newly-computed, or newly-created pointer (m for midpoint, P for a node being inserted). Same caret + letter + border treatment as blue, just in orange.
+- **Gray** = inactive, faded, out-of-range, or spliced-out elements. Fill and border both gray. Old arrows leading to a spliced node become dashed gray.
+
+Reuse the exact same color-to-role mapping on every figure in the series, so the reader learns the legend once.
+
+**Pointer marker convention.** A pointer is *not* drawn as a labeled arrow shooting into the node. Instead: place a small caret `^` directly under the index tick (for arrays) or under the node (for linked lists), and place the pointer letter (`i`, `j`, `m`, `P`, `n0`, `n1`) under the caret in the matching color. This keeps the diagram horizontal-thin and never overlaps the data row.
+
+**Active element highlight.** Wrap the active node/bar in a hollow thick-bordered rectangle whose border color matches the owning pointer. The fill stays the data color (green); only the border changes. Do not flood-fill an active element.
+
+**Transitions inside a single figure** (only when the step inherently contains a small before → after micro-sequence, like inserting a node which is two pointer rewrites). Stack mini-snapshots vertically. Between them, draw a short downward gray arrow whose label is the literal code statement of the rewrite (e.g. `P.next = n1`, `n0.next = P`, `cur->next = cur->next->next`) and place a parenthetical English gloss below: `(Set P point to n1)`. Code identifiers in the label keep their assigned colors (P orange, n0/n1 blue). Prose lives only in the parenthetical, never in the arrow label itself.
+
+**Null terminus.** The end of a list, an empty pointer, or a sentinel is the word `None` in light gray text — not a box, not `∅`, not `nullptr`. Place it where the next node would be, slightly offset to the right with a short arrow leading to it from the last real node.
+
+**Faded / spliced-out / deleted elements.** Re-render the same shape but with gray fill, gray border, dashed outline. The arrow that used to point at it becomes dashed gray. Do NOT overlay a red X. Hello-algo's deletion figure proves this: the ghost of the deleted node remains visible in gray to show what the pointer rewrite removed, with a caption that explains "we consider the node to have been deleted."
+
+**Variant family figures** (e.g. singly / doubly / circular linked list shown side-by-side as conceptual peers, not algorithm steps). Stack three rows vertically. Above each row, a bold green section title (`Singly linked list`, `Circular linked list`, `Doubly linked list`). Each row shows the same five-node example so the structural difference is the only thing that varies between rows. No step badge here — this is a single-concept reference figure, not a trace.
+
+**Captions: code-colored identifiers in prose.** Inside the gray caption box (and any explanatory annotation in the figure), render variable names in their assigned color: `i` blue, `j` blue, `m` orange, `P` orange, `n0` green. The reader's eye locks the same color to the same role across all eight steps.
+
+**Caption shape.** One declarative sentence is the default. If the step performs a literal code computation, write the caption as a short numbered list — typically two lines: `1. Calculate the midpoint m = (i + j) / 2` followed by `2. ∵ nums[m] == target ∴ Return index m`. Keep these to two or three lines max; if the step needs more explanation, split it into two figures.
+
+**Whitespace and aspect.** Targets: 16:9 canvas, diagram occupies ~55% of the area centered, caption box ~20% below it, the rest is breathing room. Resist the urge to fill the whitespace — it is the point. Crowded diagrams stop reading as algorithm walkthroughs and start reading as architecture diagrams.
+
+**Style line to append to the composite prompt:**
+
+> Clean technical diagram in the hello-algo.com style. White background, portrait canvas tall enough to fit all step rows comfortably. One short title strip at the top; below it, a vertical stack of step rows, each row containing a `Step N` badge on the left, the diagram in the middle, and a one-sentence light-gray caption box on the right or directly below. Brand green for data values and node fills; blue for boundary pointers (i, j, head, cur); orange for dynamic/computed pointers (m, next, inserted node); gray for inactive/spliced/out-of-range elements. Pointer markers as caret `^` under the index/node with the letter below in matching color. Active element shown as hollow thick-bordered rectangle around the data shape, fill unchanged. Null terminus as the word `None` in light gray. Spliced-out elements drawn as a faded gray dashed ghost — no red X. Generous whitespace between rows. No decorative elements.
