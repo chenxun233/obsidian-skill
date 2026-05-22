@@ -21,6 +21,56 @@ Figures are created for **understanding the mechanism at a single glance** — n
 6. **Ruthlessly cut detail.** If an element does not directly serve the one-glance insight, remove it. Prefer fewer, larger, clearer elements over many small ones.
 7. Produce only the prompt itself — no explanation, no preamble. The output should be something the user can copy and paste immediately.
 
+## Notation convention for indexed data structures
+
+When a figure involves arrays, hash maps, or any indexed data structure, use this notation consistently throughout the entire prompt and the resulting diagram:
+
+- **`[N]`** — an **index** (a position in a sequence). Use for array subscripts and index labels. Example: `[0]`, `[3]`, `[i]`.
+- **`{V}`** — an **element** (a stored value, a hash key, or any data value). Use for element contents and hash-map keys. Example: `{7}`, `{target}`, `{nums[i]}`.
+
+**Never use `[V]` to label a value.** The bracket form `[...]` is reserved exclusively for positions. A hash-map lookup on value 7 is written `seen{7}`, not `seen[7]`, because 7 is a value being used as a key, not an index.
+
+**Never write accidental double brackets `[[...]]`.** Double brackets arise when individual index brackets `[N]` are accidentally nested inside a list bracket. Use exactly one bracket pair in each context:
+
+| Situation | ✗ Wrong | ✓ Correct |
+|---|---|---|
+| List of indices as a hash-map value | `[[0], [3]]` | `[0, 3]` |
+| Single index standalone (subscript, pointer) | — | `[0]` |
+| Emitted index pair | `[[0], [1]]` | `([0], [1])` |
+| Hash-map key (a value, not an index) | `seen[7]` | `seen{7}` |
+
+**Exception — genuine array-of-arrays:** when the data structure itself holds sub-arrays as elements (2D arrays, adjacency lists, list-of-intervals), double brackets are correct and expected. `[[1, 2], [3, 4]]` is right because each inner `[...]` is an array element, not an index label. The ban applies only when `[[...]]` arises from accidentally wrapping an index `[N]` inside a list bracket.
+
+**Self-check before finalising any prompt:** scan the prompt text for `[[`. Ask: does each instance represent a genuine array-of-arrays element, or is it an accidentally nested index label? Fix the latter; keep the former.
+
+Apply this notation to every label in the figure: array box contents, hash-map key labels, complement calculations, pointer annotations, and caption text. Inconsistent notation defeats the purpose of the convention and confuses the reader.
+
+**`unordered_map` iteration-order disclaimer.** Whenever a figure shows the internal state of a `std::unordered_map` (or any hash table) evolving across steps, add a small italic label on the map-state column header:
+
+> *Entries shown sorted by key for readability — actual `unordered_map` iteration order is undefined and is NOT insertion order.*
+
+Place it as a one-line annotation directly below the column header, in light gray italic text. This prevents the figure from teaching the false mental model that hash maps preserve insertion order. Do not omit this disclaimer even when the shown order happens to match insertion order in the example — the coincidence is misleading.
+
+## Delta highlighting in multi-step figures
+
+Any figure that shows state evolving across multiple steps (algorithm traces, sorting passes, pointer sweeps, graph traversals, state machines, protocol exchanges) must make it immediately obvious what changed in each step — without the reader having to mentally diff two rows.
+
+- **Highlight new or changed elements** in each step using a bolder border, a distinct tint, or a `★ NEW` badge. Leave carry-over elements at normal weight.
+- **Fade or gray out** elements that were active in a previous step but are no longer relevant now.
+- The rule: a reader scanning any single row must be able to identify the delta in under one second, without looking at adjacent rows.
+
+This applies to every evolving-state figure: a pointer moving across an array, a new node inserted into a tree, a new entry added to a map, a queue gaining or losing an element, a variable being updated. The delta is the lesson — make it the most visually prominent thing in the row.
+
+## Arrow disambiguation in multi-role figures
+
+When a figure uses arrows with more than one meaning (e.g. "maps to" inside a data structure, "emits" in a flow, "points to" in a pointer diagram, "causes" in a causal chain), assign a distinct visual style to each role and include a one-line legend:
+
+- **Solid arrow →** : flow or sequence ("next step", "calls", "sends to")
+- **Dashed arrow -->** : reference or lookup ("points at", "reads from", "maps to")
+- **Double arrow ⟹** : produces or emits ("outputs", "yields", "emits pair")
+
+Not every figure needs all three. Use only the styles that actually appear, and list them in a small legend box in a corner of the figure. The goal is that the reader never has to guess what an arrow means.
+
 ## Output shape
 
 - **Default orientation: horizontal (left to right).** All main flows, pipelines, and sequences run left to right unless the user explicitly requests vertical or the concept is inherently top-to-bottom (e.g. a call stack, a memory layout). Always state "flow runs left to right" explicitly in the prompt so the image generator does not default to vertical.
