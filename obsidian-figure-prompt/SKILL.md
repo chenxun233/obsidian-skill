@@ -45,6 +45,24 @@ When a figure involves arrays, hash maps, or any indexed data structure, use thi
 
 Apply this notation to every label in the figure: array box contents, hash-map key labels, complement calculations, pointer annotations, and caption text. Inconsistent notation defeats the purpose of the convention and confuses the reader.
 
+## One container = one box (multi-element rendering)
+
+A single container that holds several elements must be drawn as **ONE box with the elements comma-separated inside it** — never as several adjacent single-element boxes. Splitting one container into per-element boxes teaches the false mental model that each element is its own separate container.
+
+This bug is most common in adjacency lists, hash-map buckets, and any "index → list of values" structure. When a node `0` points to neighbors `1` and `2`, the inner vector `adj[0]` holds both, so it is **one** box:
+
+| Situation | ✗ Wrong (splits one container) | ✓ Correct (one box) |
+|---|---|---|
+| Inner vector with two ints | `{ 1 }` `{ 2 }` | `{ 1, 2 }` |
+| Inner vector of two pairs | `{ 1, 5 }` `{ 2, 3 }` | `{ {1, 5}, {2, 3} }` |
+| Hash-map bucket, two strings | `{ "B" }` `{ "C" }` | `{ "B", "C" }` |
+
+**Always state the rendering rule explicitly in the prompt** whenever the figure shows a container holding more than one element, e.g.: "each index slot points to exactly ONE box; multiple elements are listed comma-separated inside that single box, NOT as separate boxes." Image models default to one-box-per-token unless told otherwise.
+
+**Distinguish from genuine multi-slot structures.** Separate boxes ARE correct when each box is its own indexed slot of the OUTER container (e.g. the array cells `[0] [1] [2]` of a `vector`, or successive nodes of a linked list). The one-box rule applies only to the elements held INSIDE a single container slot — the inner list, the bucket, the row. Outer slots: many boxes. Inner contents of one slot: one box.
+
+**Self-check before finalising:** for every container in the prompt, ask "is this drawn as one box, or did I accidentally split its elements into separate boxes?" Collapse any split inner container back into a single comma-separated box.
+
 **`unordered_map` iteration-order disclaimer.** Whenever a figure shows the internal state of a `std::unordered_map` (or any hash table) evolving across steps, add a small italic label on the map-state column header:
 
 > *Entries shown sorted by key for readability — actual `unordered_map` iteration order is undefined and is NOT insertion order.*

@@ -1,131 +1,173 @@
 ---
 name: obsidian-teaseout
-description: "Tease out the core reusable insight from a programming algorithm or code snippet and create a Skill-- note under programming_skill/. Use when: tease out the skill, extract the core logic, what is the real insight here, create a skill note from this code, what makes this work."
+description: "Process a LeetCode problem into three artifacts: the problem note (instance + solution), pattern notes (recipes), and primitive notes (intent-to-code translation units). Deduplicate aggressively; reuse beats create. Use when: tease out this problem, add this problem to vault, extract pattern and primitives."
 ---
 
 # Obsidian Tease-Out
 
-Extract the fundamental programming insight from a coding algorithm or solution and crystallize it into a durable `programming_skill/Skill--<name>.md` note in the vault at `/Users/xunchen/Documents/tech`.
+Given a LeetCode problem, produce a minimal set of vault notes:
+1. **One problem note** at `Leet Code/LC <index>--<name>.md`.
+2. **Zero or one pattern note** at `coding skill/patterns/Pattern--<name>.md`.
+3. **Zero or more primitive notes** at `coding skill/primitives/Primitive--<name>.md`.
 
-## The goal
+**Default behavior is REUSE, not CREATE.** A well-functioning vault should add zero or one new pattern/primitive notes per problem. Only create a new pattern or primitive when no existing one fits.
 
-The goal is NOT to name the surface pattern ("prefix sum + hashmap", "monotonic deque"). The goal is to find the core logical move that makes the solution beautiful — the thing the solution gives you **for free** that the naive approach never gets.
+## The architecture
 
-**Example of bad extraction**: "the skill is prefix sum + hashmap."
+- **Problem note** = the instance. Holds the problem statement, the specific solution, full code. Links out to its pattern and primitives.
+- **Pattern note** = the recipe. Names the algorithmic shape. Lists composing primitives as wikilinks. No full solution code.
+- **Primitive note** = the intent-to-code unit. Names a single task a programmer can state in plain English ("I want to…") but does not yet know how to express in code. Holds the minimal C++ idiom that realizes that intent. Reusable across patterns. No full solution code.
 
-**Example of good extraction**: "by moving only one pointer `i`, you already have three sums for free: sum(0→i), sum(0→j), and sum(i→j). You never need a second pointer because the difference between any two prefix sums IS the subarray sum. The hashmap just makes the lookup O(1)."
-
-The free lunch is the insight. The data structure is just the container that makes the free lunch cheap to access.
+The problem note is a junction box. The pattern and primitive notes are the permanent vocabulary.
 
 ## What to do
 
 ### Step 1 — Read the source
 
-Read the referenced vault note, code snippet, or algorithm description. If the user points to a `[[note]]`, read that file. If the user pastes code, analyze it directly.
+Read the problem statement and the user's solution / approach. If the user describes what they knew vs. didn't know, treat the "didn't know" parts as candidate primitive gaps.
 
-### Step 2 — Find the naive approach
+### Step 2 — Identify the pattern
 
-State explicitly what the brute-force approach would look like and why it is too slow. This is the baseline the insight escapes from.
+Name the pattern in 3–7 words. Examples: "Grid BFS", "Sliding window with counter", "Monotonic stack — next greater", "DP on intervals", "Union-find".
 
-- What nested loop or repeated scan does the naive solution require?
-- What is its time complexity?
-- What is the constraint that makes it fail (TLE, N² blowup, etc.)?
+**Then check for existence:**
+- List `coding skill/patterns/` with `ls`.
+- If a `Pattern--<name>` note with a matching name exists, **reuse it**. Do not create.
+- If a near-match exists (e.g., this is "Grid BFS" and "Grid BFS" exists), **always reuse**. Variation goes into primitives, not new patterns.
+- Only create a new `Pattern--` note if no existing pattern covers this problem's shape.
 
-### Step 3 — Find the free lunch
+### Step 3 — Identify the primitives
 
-This is the core of the skill. Ask these questions in order:
+List every place in the solution where a programmer would know *what* they want to achieve but not yet *how* to code it. Aim for 3–6. For each, write the **gap** as a plain-English intent statement: *"I want to X"* — the exact sentence a stuck programmer would say before knowing the idiom.
 
-1. **What does this approach give you for free, by construction?**
-   - Example: a running prefix sum gives you the sum of any prefix 0→i in O(1), so the difference of two prefix sums gives you any subarray sum without scanning it.
-   - Example: a monotonic deque gives you the window maximum in O(1) because dominated candidates are stripped immediately — you never revisit them.
+Examples of primitive gaps:
+- "I want to avoid revisiting cells."
+- "I want to process BFS nodes one layer at a time."
+- "I want to signal that no answer was found."
+- "I want to compute the width of the popped span on a monotonic stack."
 
-2. **What constraint does this insight eliminate?**
-   - Example: "you do not need to move the left pointer to enumerate all subarray sums."
-   - Example: "you do not need to re-scan the window for each new position."
+The gap is indexed by **intent, not by mechanic**. If two problems share the same intent, they share the same primitive — even when the exact C++ idiom differs slightly. Different idioms become Variants.
 
-3. **What single structure or identity enables the free lunch?**
-   - Is it an algebraic identity (prefix sum difference = subarray sum)?
-   - Is it a monotone invariant (deque always sorted → front is always the extremum)?
-   - Is it a counting trick (frequency map converts O(N) inner scan into O(1) lookup)?
+**Then check for existence:**
+- List `coding skill/primitives/` with `ls`.
+- For each primitive candidate, grep existing `Primitive--*.md` files for the `Gap:` line.
+- If an existing primitive covers the same intent, **reuse it**. If this problem uses a *new idiom for the same intent*, **edit the existing note's Variants section** — do not create a new primitive.
+- Only create a new `Primitive--` note if the intent is genuinely new.
 
-4. **Is the free lunch transferable?** Can you name 3+ other problems where the same insight applies? If yes, the insight is a genuine reusable skill. If you can only name 1 problem, the insight may be too narrow — go deeper until you find a broader principle.
+### Step 4 — Write the problem note
 
-### Step 4 — Name it by the mechanism, not the problem
-
-The name should describe WHAT THE MECHANISM DOES, not the problem it was extracted from.
-
-- Bad name: "subarray sum skill" (names the problem)
-- Bad name: "prefix sum" (names the data structure, not the insight)
-- Good name: "prefix sum complement lookup" (names the identity + the lookup operation)
-- Good name: "monotonic deque" (names the invariant that is maintained)
-
-The name should let a programmer recognize "I have seen this mechanism before" when they encounter a new problem.
-
-### Step 5 — Write the skill note
-
-Create the file at `/Users/xunchen/Documents/tech/programming_skill/Skill--<name>.md`.
-
-The note must follow this structure (look at existing sibling notes in `programming_skill/` for the exact shape):
+Create `Leet Code/LC <index>--<name>.md`:
 
 ```
-## Recap
-- One-line statement of the free lunch (the core insight), in plain English
-- The constraint it eliminates ("you do not need a second pointer / inner loop / re-scan")
-- Complexity: O(?) time, O(?) space
-- When to apply trigger (what problem shape makes this skill the right reach)
+## Problem
+<1–2 sentence restatement, stripped of LeetCode flavor>
 
-<Naming preamble — why the name fits the mechanism>
+Constraints: <key bounds, e.g., n ≤ 10^5>
 
-## Story
-### The pressure
-<Concrete problem shape + why naive is O(N²) or worse>
+## Pattern
+[[Pattern--<name>]]
 
-### The naive approach
-<What the brute force does. Be specific.>
+## Primitives used
+- [[Primitive--<name1>]] — <one-line note of how it applies here>
+- [[Primitive--<name2>]] — <one-line note of how it applies here>
+- ...
 
-### The free lunch
-<State the core insight. Use concrete numbers. Show the three sums, or the eliminated pointer, or the stripped candidates — whatever the mechanism gives for free. This is the heart of the note. Do not rush past it. Make it undeniable.>
+## Solution
+```cpp
+<full working C++ solution>
+```
 
-### Why the mechanism enables it
-<What data structure, invariant, or algebraic identity makes the free lunch O(1) to access? Why is THIS structure the exact right fit?>
+## Stall points I hit
+- <verbatim "I didn't know how to..." question, if any>
+- <the primitive that filled it>
 
-### Implementation
-<Minimal code showing only the core mechanism, not a full problem solution>
+## Complexity
+- Time: O(?)
+- Space: O(?)
+```
+
+### Step 5 — Write or update the pattern note
+
+If creating a new `Pattern--<name>.md`:
+
+```
+## Signal
+"<phrases in problem statements that trigger this pattern>"
+
+## Composed of
+- [[Primitive--<name1>]]
+- [[Primitive--<name2>]]
+- ...
+
+## Skeleton
+<4–7 step English skeleton, no syntax. The pattern's canonical shape.>
+
+## Problems
+- [[LC <index>--<name>]]
+```
+
+If the pattern already exists, only update its `## Problems` section to include this LC link.
+
+**Hard cap: 20 lines.** A pattern note is a recipe card, not a tutorial. The primitives carry the detail.
+
+### Step 6 — Write or update primitive notes
+
+If creating a new `Primitive--<name>.md`:
+
+```
+## Gap
+"I want to <plain-English intent — the exact sentence a stuck programmer would say>"
+
+- <bullet: when this primitive is the right reach>
+- <bullet: when a related but different structure is better — same space-for-time idea, different tool>
+- <bullet: when NOT applicable — what problem shape disqualifies it>
+
+## Move
+<1–3 lines of concrete C++ idiom that realizes the intent — the default approach>
 
 ## Variants
-<3+ other problems where the same free lunch applies. State what the "prefix value" or "monotone quantity" is in each variant.>
+- <variant 1: alternative idiom for the same intent>
+- <variant 2: ...>
 
-## Common Trap
-<What does a programmer do when they MISS the insight? They fall back to a nested loop or second pointer. Call that out explicitly.>
+## Trap
+<the specific bug that occurs when this primitive is done wrong>
 
-## Final mental model
-<One paragraph. State the free lunch, the constraint it eliminates, and the structure that makes it O(1). Should be memorable enough to reconstruct the technique from scratch after reading once.>
+## Used in
+- [[LC <index>--<name>]]
 ```
 
-### Step 6 — Wire links
+If the primitive already exists:
+- Add this LC to `## Used in`.
+- If this problem demonstrated a *new idiom for the same intent*, add it to `## Variants`.
+- Do not touch other sections.
 
-- Wire outgoing wikilinks to any vault notes the skill note references (the source problem note, related container notes, variant problem notes).
-- Add a reverse link back INTO the source note (the coding-test note or wherever the algorithm lives). Add it at a natural anchor — typically the "Reusable techniques" section.
-- Search the vault for other notes that use the same mechanism without linking to this skill note; add strong incoming links where they belong.
+**Hard cap: 15 lines.** Scannable in 30 seconds.
 
-### Step 7 — Log creation
+### Step 7 — Verify links
 
-Append one creation line to `Wiki Ops/logs/YYYY-MM/YYYY-MM-DD.md`. Read the file first. Append only — never overwrite.
+After writing all notes:
+- Every wikilink resolves to an existing file.
+- The problem note's `Pattern` and `Primitives used` links match what was created/reused.
+- The pattern note's `Problems` section includes this LC.
+- Each primitive note's `Used in` section includes this LC.
+
+### Step 8 — Log creation
+
+Append one line to `Wiki Ops/logs/YYYY-MM/YYYY-MM-DD.md` summarizing: which problem was added, which pattern (new or reused), which primitives (new, reused, or updated-with-variant).
 
 ## Non-negotiable rules
 
-- **The free lunch must be stated in plain English before any code appears.** A reader who only reads the Recap and the first paragraph of the Story should understand the core insight without reading a single line of code.
-- **Name the constraint that is eliminated.** "You do not need X" is the most powerful sentence in the note. Find it.
-- **Use concrete numbers to show the free lunch.** Abstract claims are hard to remember. "By moving one pointer i, you already have sum(0→i)={6}, sum(0→j)={13}, and sum(i→j)={7} for free" is unforgettable. "Prefix sums let you compute subarray sums" is not.
-- **The free lunch must transfer to 3+ problems.** If it does not, the extraction is too narrow. Go deeper.
-- **Do not duplicate the source problem note.** The skill note captures the MECHANISM. The problem note captures the PROBLEM. They are linked but do not repeat each other's content.
-- **No backtick-wrapped wikilinks.** Vault notes on linked concepts must use `[[...]]`, never `` `[[...]]` ``.
-- **Do not self-link.** Use **bold** for the note's own name in its own prose.
+- **REUSE BEATS CREATE.** Before creating any pattern or primitive note, prove the existing vault doesn't already have it. A typical problem produces 1 new problem note + 0 new patterns + 0–1 new primitives.
+- **Primitives are indexed by INTENT, not by idiom.** Same "I want to…" intent → same primitive, even if the C++ idioms differ. Multiple idioms become Variants.
+- **Pattern notes never contain full problem solutions.** Only skeletons.
+- **Primitive notes never contain full problem solutions.** Only the mechanic snippet.
+- **All links are wikilinks, never backtick-wrapped.**
+- **The problem note links out; pattern and primitive notes link back.** Bidirectional, always.
+- **Length caps are real:** problem note ~60 lines, pattern ~20, primitive ~15.
 
 ## Self-review before finishing
 
-Run these three checks explicitly before declaring the note done:
-
-1. **Truth**: Is the free lunch claim correct? Can you verify it with a 3-element example?
-2. **Transferability**: Are the 3+ variants real? Does the same core mechanism apply in each?
-3. **Plain-English first**: Can a junior programmer read the Recap and first Story paragraph and state the insight back in their own words without reading the code?
+1. **Deduplication check:** Did I `ls` both directories and grep existing `Gap:` lines before creating? If I created a new primitive, can I state the "I want to…" intent and confirm no existing primitive covers it?
+2. **Granularity check:** Is each primitive small enough that it's reused across multiple patterns? If it's only ever used in one pattern, the intent may be too problem-specific — broaden it or fold it into the pattern note.
+3. **Link check:** Does every wikilink resolve? Does every back-link exist?
+4. **Length check:** Is each note under its cap?
