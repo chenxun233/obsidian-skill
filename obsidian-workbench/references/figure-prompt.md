@@ -32,6 +32,10 @@ Rules for swim lane figures:
 
 When two separate timelines or paths represent two ends of one physical event (e.g., a sender and a receiver), connect them with a **dashed curved arrow** between the two timelines, labeled with the physical event ("packet leaves sender → arrives at receiver"). This makes the full chain visible without merging the two paths into one.
 
+## Hash tables and chained structures
+
+The governing rule is **arrow correctness — every arrow must visibly connect a slot to the exact node it points to.** Get it for free by drawing the bucket array as a **vertical column** of slots, each slot's chain running **horizontally to the right on that slot's own row** (so `[1] → {1} → {5}` aligns with slot `[1]`). A horizontal slot row makes the chained nodes float off unaligned and arrows land ambiguously. For a before → after (rehash / resize), draw each state as its own correctly-wired snapshot — **stacked or side by side, either is fine** — and never route both states into a shared central node band (its arrows lose their targets). Show "nodes don't move" with one dashed identity tie on a single exemplar node. (Validated on the `unordered_map` rehash figure: the failure was always a misplaced arrow.)
+
 ## What to include in the prompt
 
 1. **Layout description.** Say where each element goes (top, bottom, left, right, inside, beside).
