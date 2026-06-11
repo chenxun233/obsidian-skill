@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian Compact"
+  short_description: "Compact digested Obsidian notes into cheat sheets"
+  default_prompt: "Compact this Obsidian note into a cheat-sheet version."

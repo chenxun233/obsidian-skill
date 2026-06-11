@@ -45,6 +45,23 @@ When a figure involves arrays, hash maps, or any indexed data structure, use thi
 
 Apply this notation to every label in the figure: array box contents, hash-map key labels, complement calculations, pointer annotations, and caption text. Inconsistent notation defeats the purpose of the convention and confuses the reader.
 
+## Hash tables, bucket arrays, and chained structures
+
+The governing requirement is **arrow correctness: every arrow must visibly start at its exact source and end on its exact target node.** In a bucket-array-with-chains figure the usual failure is an arrow that floats or lands ambiguously — a slot's chain that does not visibly connect back to that slot. The layout below makes the alignment automatic; the layout is only a means, arrow correctness is the end.
+
+- **Draw the bucket / index array as a VERTICAL column** of slots (`[0]` at top, then `[1]`, `[2]`, … downward).
+- **Each slot's chain extends HORIZONTALLY to the RIGHT, on that slot's own row**, so `[1] → {1} → {5}` is one straight line beginning at slot `[1]`. The node then sits on the same row as the slot that points to it, so the arrow's two endpoints are unambiguous.
+- A **horizontal row of slots** forces the chained nodes to float off to the side, unaligned with their slot — arrows then land ambiguously. Do not use it.
+- **Empty slots:** a small gray slot box with no chain.
+
+For a **before → after transformation** (rehash, resize, grow ×2):
+
+- Draw **each state as its own self-contained, correctly-wired snapshot** (vertical array + per-row chains) so every arrow inside it connects to the right node. The two states may be **stacked or placed side by side — the layout does not matter; only the arrow correctness within each state does.**
+- **Do NOT route both states' arrows into one shared central node band** — shared-band arrows lose their targets and the second array reads as disconnected.
+- To show the elements **do not move** (node-based storage), draw ONE labeled dashed *identity tie* from a single exemplar node in the Before state to the same node in the After state (e.g. `{1}` to `{1}`, "same node · address unchanged").
+
+Validated empirically (the `unordered_map` rehash figure): the failure was always a **misplaced arrow** — a vertical array with per-row chains fixes it; a horizontal slot row or a shared node band leaves arrows landing in the wrong place.
+
 ## One container = one box (multi-element rendering)
 
 A single container that holds several elements must be drawn as **ONE box with the elements comma-separated inside it** — never as several adjacent single-element boxes. Splitting one container into per-element boxes teaches the false mental model that each element is its own separate container.
